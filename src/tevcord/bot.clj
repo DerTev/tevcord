@@ -13,17 +13,16 @@
   [token]
   (println "Start bot...")
   (let [event-channel (async/chan 100)
-        connection-channel (connections/connect-bot!
-                             token
-                             event-channel
-                             :intents #{:guilds :guild-messages})
+        connection-channel (connections/connect-bot! token
+                                                     event-channel
+                                                     :intents #{:guilds :guild-messages})
         message-channel (messaging/start-connection! token)]
 
     (println "Register schedulers...")
     (scheduler/schedule-every-x (* 1000 60 60 24) #(clj-cmds/clojure-func {:msg-conn message-channel
-                                                                     :data {:channel-id (-> :CLOJURE_CHANNEL
-                                                                                                                      env/env
-                                                                                                                      Long/parseLong)}}))
+                                                                           :data     {:channel-id (-> :CLOJURE_CHANNEL
+                                                                                                      env/env
+                                                                                                      Long/parseLong)}}))
 
     (println "Update presence...")
     (connections/status-update! connection-channel :activity

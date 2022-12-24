@@ -4,6 +4,15 @@
             [discljord.messaging :as msg]
             [clojure.data.json :as json]))
 
+(def interval (delay (try
+                       (let [env-interval (-> :CLOJURE_INTERVAL
+                                              env/env
+                                              Integer/parseInt)]
+                         (println (str "Running clojure-func every " env-interval " hours."))
+                         env-interval)
+                       (catch Exception e
+                         (do (println "Error while loading Clojure-Interval: " (.getMessage e))
+                             12)))))
 
 (defn clojure-func
   "Sends random clojure function"

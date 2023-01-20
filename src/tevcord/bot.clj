@@ -27,11 +27,13 @@
                                                                                      Long/parseLong)}}))
 
     (println "Update presence...")
-    (connections/status-update! connection-channel :activity
-                                (connections/create-activity :type (-> :ACTIVITY_TYPE
-                                                                       env/env
-                                                                       keyword)
-                                                             :name (env/env :ACTIVITY_NAME)))
+    (scheduler/schedule-every-x (* 1000 60 60 1)
+                                #(connections/status-update! connection-channel :activity
+                                                             (connections/create-activity
+                                                               :type (-> :ACTIVITY_TYPE
+                                                                         env/env
+                                                                         keyword)
+                                                               :name (env/env :ACTIVITY_NAME))))
 
     (println "Start listening to events...")
     (try

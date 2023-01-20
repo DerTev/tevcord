@@ -1,9 +1,11 @@
 (ns tevcord.commands
   (:require [clojure.string :as string]
 
-            [tevcord.commands.clojure :as clj-cmds]))
+            [tevcord.commands.clojure :as cclj]
+            [tevcord.commands.status :as cstatus]))
 
-(def commands {"clojure-func" clj-cmds/clojure-func})
+(def commands {"clojure-func" cclj/clojure-func
+               "status" cstatus/status})
 
 (defn parse-command
   "Parse discord text message for [[run-command]]"

@@ -1,4 +1,4 @@
-(defproject tevcord "0.3.0"
+(defproject tevcord "0.3.1"
   :description "Just a bot for my Discord-Server"
   :url "https://github.com/dertev/tevcord"
   :license {:name "MIT License"}

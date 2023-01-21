@@ -30,6 +30,10 @@
     (msg/create-message! (get cmd :msg-conn)
                          (get-in cmd [:data :channel-id])
                          :embed {:title  "Status"
+                                 :color (cond
+                                          (every? #(true? (http-error (nth % 1))) states) 16738657
+                                          (every? #(false? (http-error (nth % 1))) states) 7855479
+                                          :else 16757575)
                                  :fields (vec (for [state states]
                                                 {:name  (nth state 0)
                                                  :value (str (if (http-error (nth state 1))
